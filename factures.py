@@ -1,13 +1,16 @@
 from dataclasses import dataclass
+import unittest
 import itertools
 
-@dataclass
+
 class Product:
     """
     This class describes a given Product to buy
     """
-    name: str
-    price: float
+    def __init__(self, name, price):
+        assert price > 0
+        self.name = name
+        self.price = price
 
 @dataclass
 class InvoiceLine:
@@ -59,7 +62,6 @@ class Invoice:
         for invoice_line in self.invoice_lines:
             my_invoice_description.append(f"{invoice_line.product.name} quantity : {invoice_line.quantity} price : {invoice_line.amount}")
         return '\n'.join(my_invoice_description)
-
 
 
 def build_invoice():

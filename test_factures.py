@@ -46,6 +46,9 @@ class InvoiceTestCase(unittest.TestCase):
         invoice.tva = 1.3
         self.assertEqual(invoice.final_price, 546.0)
 
+        print(invoice)
+
 
 if __name__ == "__main__":
     unittest.main()
+

@@ -92,8 +92,8 @@ def test_invoice():
     # We check that the invoice lines are correct. We also check the total amount
     products_names = ["red_dragon", "cute_unicorn", "lolcat"]
 
-    for invoice_line, products_name in itertools.zip_longest(invoice.invoice_lines, products_names):
-        assert invoice_line.product.name == products_name
+    for invoice_line, product_name in itertools.zip_longest(invoice.invoice_lines, products_names):
+        assert invoice_line.product.name == product_name
     assert invoice.final_price == 504.0
 
     # We change the TVA, check that the total amount is correctly calculated

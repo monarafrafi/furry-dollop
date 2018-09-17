@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-
+import itertools
 
 @dataclass
 class Product:
@@ -92,7 +92,7 @@ def test_invoice():
     # We check that the invoice lines are correct. We also check the total amount
     products_names = ["red_dragon", "cute_unicorn", "lolcat"]
 
-    for invoice_line, products_name in zip(invoice.invoice_lines, products_names):
+    for invoice_line, products_name in itertools.zip_longest(invoice.invoice_lines, products_names):
         assert invoice_line.product.name == products_name
     assert invoice.final_price == 504.0
 

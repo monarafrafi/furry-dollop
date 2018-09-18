@@ -4,6 +4,9 @@ from factures import Product, InvoiceLine, Invoice
 import itertools
 import factory
 from faker.providers import BaseProvider
+from jinja2 import Environment, FileSystemLoader, StrictUndefined
+from weasyprint import HTML, CSS
+from weasyprint.fonts import FontConfiguration
 
 list_of_products_names = ['Horse', 'Dog', 'Chicken', 'Octopus', 'Whale']
 
@@ -25,7 +28,7 @@ class ProductFactory(factory.Factory):
     class Meta:
         model = Product
     name = factory.Faker('product_name')
-    price = factory.Faker('random_int', min=0, max=10)
+    price = factory.Faker('random_int', min=1, max=10)
 
 
 class InvoiceLineFactory(factory.Factory):
@@ -47,6 +50,7 @@ def create_product_random(self):
     fake_product = ProductFactory()
     return fake_product
 
+
 class ProductTestCase(unittest.TestCase):
 
     def test_product_creation(self):
@@ -55,7 +59,6 @@ class ProductTestCase(unittest.TestCase):
         self.assertEqual(10, dragon.price)
         with self.assertRaises(AssertionError):
             Product("red_dragon", -10)
-
 
 
 class InvoiceLineTestCase(unittest.TestCase):
@@ -109,5 +112,31 @@ class InvoiceTestCase(unittest.TestCase):
         self.assertEqual(len(self.invoice.invoice_lines), 3)
 
 
+def generate_invoice_html(invoice):
+    env = Environment(loader=FileSystemLoader('templates'), undefined=StrictUndefined)
+    template = env.get_template('invoice.html')
+    import pathlib
+    render = template.render(invoice=invoice)
+    pathlib.Path('/tmp/demo.html').write_text(render)
+    print(render)
+    return render
+
+def generate_invoice_pdf(content,filename):
+    font_config = FontConfiguration()
+    html = HTML(string=content)
+    html.write_pdf(filename, font_config=font_config)
+
+class InvoiceHtmltestCase(unittest.TestCase):
+
+    def generate_invoice_html(self):
+        invoice = InvoiceFactory
+        content = generate_invoice_html(invoice)
+
+
 if __name__ == "__main__":
-    print(create_invoice_random())
+    invoice = InvoiceFactory()
+    content = generate_invoice_html(invoice)
+    generate_invoice_pdf(content, '/tmp/invoice.pdf')
+
+
+

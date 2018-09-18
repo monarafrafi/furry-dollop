@@ -8,6 +8,7 @@ class Product:
     This class describes a given Product to buy
     """
     def __init__(self, name, price):
+        # The price must be positive
         assert price > 0
         # string and not empty (or spaces only)
         assert isinstance(name, str) and len(name.strip()) > 0

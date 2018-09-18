@@ -14,14 +14,14 @@ class Product:
         self.price = price
 
 
-@dataclass
+
 class InvoiceLine:
     """
     This class describes a given line of an Invoice
     """
-
-    product: Product
-    quantity: int = 1
+    def __init__(self, product, quantity=1):
+        self.product = product
+        self.quantity = quantity
 
     @property
     def amount(self):
@@ -29,6 +29,20 @@ class InvoiceLine:
         :return: the price of one invoice line in euros
         """
         return self.product.price*self.quantity
+
+    @property
+    def quantity(self):
+        return self._quantity
+
+    @quantity.setter
+    def quantity(self, quantity):
+        if quantity < 0:
+            self._quantity = 0
+        elif quantity > 1000:
+            self._quantity = 1000
+        else:
+            self._quantity = quantity
+
 
 
 class Invoice:

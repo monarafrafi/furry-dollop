@@ -25,14 +25,29 @@ class ProductFactory(factory.Factory):
     class Meta:
         model = Product
     name = factory.Faker('product_name')
-    price = factory.Faker('random_int', min=0, max=100)
+    price = factory.Faker('random_int', min=0, max=10)
 
+
+class InvoiceLineFactory(factory.Factory):
+    class Meta:
+        model = InvoiceLine
+    product = factory.SubFactory(ProductFactory)
+    quantity = factory.Faker('random_int', min=1, max=10)
+
+
+class InvoiceFactory(factory.Factory):
+    class Meta:
+        model = Invoice
+    client = factory.Faker('name')
+    invoice_lines = factory.List(factory.SubFactory(InvoiceLineFactory) for i in range(5))
+    tva = 1.2
+
+
+def create_product_random(self):
+    fake_product = ProductFactory()
+    return fake_product
 
 class ProductTestCase(unittest.TestCase):
-
-    def create_product_random(self):
-        fake_product = ProductFactory()
-        return fake_product
 
     def test_product_creation(self):
         dragon = Product("red_dragon", 10)
@@ -42,7 +57,12 @@ class ProductTestCase(unittest.TestCase):
             Product("red_dragon", -10)
 
 
+
 class InvoiceLineTestCase(unittest.TestCase):
+
+    def create_invoices_lines_random(self):
+        return factory.List(InvoiceLineFactory() for i in range(5))
+
 
     def test_invoice_lines_creation(self):
         # Create the invoice Lines
@@ -64,6 +84,7 @@ class InvoiceTestCase(unittest.TestCase):
         invoice_lines = [InvoiceLine(dragon, 1), InvoiceLine(unicorn, 10), InvoiceLine(cat, 42)]
 
         self.invoice = Invoice("Mona", invoice_lines)
+        # self.invoice = InvoiceFactory(tva=1.4)
 
     def test_product_names(self):
 
@@ -89,4 +110,4 @@ class InvoiceTestCase(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    print(create_invoice_random())

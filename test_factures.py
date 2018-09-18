@@ -26,7 +26,7 @@ class InvoiceLineTestCase(unittest.TestCase):
 
 class InvoiceTestCase(unittest.TestCase):
 
-    def test_invoice_creation(self):
+    def setUp(self):
         # Create a full invoice
         dragon = Product("red_dragon", 10)
         unicorn = Product("cute_unicorn", 20)
@@ -34,19 +34,29 @@ class InvoiceTestCase(unittest.TestCase):
 
         invoice_lines = [InvoiceLine(dragon, 1), InvoiceLine(unicorn, 10), InvoiceLine(cat, 42)]
 
-        invoice = Invoice("Mona", invoice_lines)
+        self.invoice = Invoice("Mona", invoice_lines)
+
+    def test_product_names(self):
+
         # We check that the invoice lines are correct. We also check the total amount
         products_names = ["red_dragon", "cute_unicorn", "lolcat"]
 
-        for invoice_line, product_name in itertools.zip_longest(invoice.invoice_lines, products_names):
+        for invoice_line, product_name in itertools.zip_longest(self.invoice.invoice_lines, products_names):
             self.assertEqual(invoice_line.product.name, product_name)
-        self.assertEqual(invoice.final_price, 504.0)
 
+    def test_prices(self):
+        # with tva by default
+        self.assertEqual(self.invoice.final_price, 504.0)
+        # without tva
+        amount = sum(invoice_line.amount for invoice_line in self.invoice.invoice_lines)
+        self.assertEqual(amount, 420.0)
         # We change the TVA, check that the total amount is correctly calculated
-        invoice.tva = 1.3
-        self.assertEqual(invoice.final_price, 546.0)
+        self.invoice.tva = 1.3
+        self.assertEqual(self.invoice.final_price, 546.0)
 
-        print(invoice)
+    def test_number_of_lines(self):
+
+        self.assertEqual(len(self.invoice.invoice_lines), 3)
 
 
 if __name__ == "__main__":

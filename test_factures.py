@@ -1,9 +1,38 @@
 import unittest
+import random
 from factures import Product, InvoiceLine, Invoice
 import itertools
+import factory
+from faker.providers import BaseProvider
+
+list_of_products_names = ['Horse', 'Dog', 'Chicken', 'Octopus', 'Whale']
+
+
+class ProductProvider(BaseProvider):
+    """
+    This custom povider returns product names
+    """
+    def product_name(self):
+        return random.choice(list_of_products_names)
+
+
+# We add the Product provider to factory
+factory.Faker.add_provider(ProductProvider)
+
+
+# We create our product factory
+class ProductFactory(factory.Factory):
+    class Meta:
+        model = Product
+    name = factory.Faker('product_name')
+    price = factory.Faker('random_int', min=0, max=100)
 
 
 class ProductTestCase(unittest.TestCase):
+
+    def create_product_random(self):
+        fake_product = ProductFactory()
+        return fake_product
 
     def test_product_creation(self):
         dragon = Product("red_dragon", 10)

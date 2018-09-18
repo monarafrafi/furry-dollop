@@ -1,2 +1,2 @@
 factory-boy >= 2.11.*
-prettyprint
+Jinja2 == 2.10

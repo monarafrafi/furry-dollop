@@ -7,6 +7,7 @@ from faker.providers import BaseProvider
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 from weasyprint import HTML, CSS
 from weasyprint.fonts import FontConfiguration
+import pathlib
 
 list_of_products_names = ['Horse', 'Dog', 'Chicken', 'Octopus', 'Whale']
 
@@ -115,7 +116,6 @@ class InvoiceTestCase(unittest.TestCase):
 def generate_invoice_html(invoice):
     env = Environment(loader=FileSystemLoader('templates'), undefined=StrictUndefined)
     template = env.get_template('invoice.html')
-    import pathlib
     render = template.render(invoice=invoice)
     pathlib.Path('/tmp/demo.html').write_text(render)
     print(render)

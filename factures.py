@@ -1,6 +1,4 @@
 from dataclasses import dataclass
-import unittest
-import itertools
 
 
 class Product:
@@ -14,6 +12,7 @@ class Product:
         assert isinstance(name, str) and len(name.strip()) > 0
         self.name = name
         self.price = price
+
 
 @dataclass
 class InvoiceLine:
@@ -63,4 +62,3 @@ class Invoice:
             my_invoice_description.append(f"{invoice_line.product.name} "
                                           f"quantity : {invoice_line.quantity} price : {invoice_line.amount}")
         return '\n'.join(my_invoice_description)
-

@@ -10,7 +10,7 @@ class ProductTestCase(unittest.TestCase):
         self.assertEqual("red_dragon", dragon.name)
         self.assertEqual(10, dragon.price)
         with self.assertRaises(AssertionError):
-            fakedragon = Product("red_dragon", -10)
+            Product("red_dragon", -10)
 
 
 class InvoiceLineTestCase(unittest.TestCase):
@@ -61,4 +61,3 @@ class InvoiceTestCase(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

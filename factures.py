@@ -14,7 +14,6 @@ class Product:
         self.price = price
 
 
-
 class InvoiceLine:
     """
     This class describes a given line of an Invoice
@@ -42,7 +41,6 @@ class InvoiceLine:
             self._quantity = 1000
         else:
             self._quantity = quantity
-
 
 
 class Invoice:

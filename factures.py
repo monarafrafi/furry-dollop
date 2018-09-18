@@ -9,6 +9,8 @@ class Product:
     """
     def __init__(self, name, price):
         assert price > 0
+        # string and not empty (or spaces only)
+        assert isinstance(name, str) and len(name.strip()) > 0
         self.name = name
         self.price = price
 
@@ -60,6 +62,4 @@ class Invoice:
             my_invoice_description.append(f"{invoice_line.product.name} "
                                           f"quantity : {invoice_line.quantity} price : {invoice_line.amount}")
         return '\n'.join(my_invoice_description)
-
-
 

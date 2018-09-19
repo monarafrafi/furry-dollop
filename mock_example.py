@@ -53,6 +53,7 @@ def get_user():
         finally:
             print("No matter what, I must print this! ")
 
+
 def main():
     try:
         user = get_user()

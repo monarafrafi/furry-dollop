@@ -14,6 +14,7 @@ class User:
     @classmethod
     def create_from_api(cls,response):
         first_resp = response.get('results')[0]
+        cpprint(response)
 
         gender = first_resp.get('gender')
         title = first_resp.get('name').get('title')

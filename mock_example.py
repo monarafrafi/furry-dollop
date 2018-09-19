@@ -1,6 +1,6 @@
 import requests
-from dataclasses import dataclass
 from prettyprinter import cpprint
+from dataclasses import dataclass
 
 @dataclass
 class User:
@@ -12,7 +12,7 @@ class User:
     username: str
 
     @classmethod
-    def create_from_api(cls,response):
+    def create_from_api(cls, response):
         first_resp = response.get('results')[0]
         cpprint(response)
 
@@ -38,18 +38,18 @@ class HttpNotFound(Exception):
 
 def get_user():
 
-        try:
-            response = requests.get('https://randomuser.me/api')
-            print(response.status_code)
+    try:
+        response = requests.get('https://randomuser.me/api')
+        print(response.status_code)
 
-            if response.status_code == 404:
-                raise HttpNotFound()
+        if response.status_code == 404:
+            raise HttpNotFound()
 
-            return User.create_from_api(response.json())
+        return User.create_from_api(response.json())
 
-        except requests.exceptions.ConnectionError as connect_error:
-            print(str(connect_error))
-            raise APIUnreachableException("Aie Caramba")
+    except requests.exceptions.ConnectionError as connect_error:
+        print(str(connect_error))
+        raise APIUnreachableException("Aie Caramba")
 
 
 def main():
@@ -57,14 +57,11 @@ def main():
         user = get_user()
         cpprint(user)
 
-    except APIUnreachableException as e:
-        print("le serveur est injoignable", str(e), e.custom_message)
+    except APIUnreachableException as my_e:
+        print("le serveur est injoignable", str(my_e), my_e.custom_message)
     except HttpNotFound:
         print("L'information n'existe pas")
 
 
 if __name__ == '__main__':
     main()
-
-
-

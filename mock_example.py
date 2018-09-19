@@ -12,26 +12,48 @@ class User:
     username: str
 
 
+class APIUnreachableException(Exception):
+    def __init__(self, *args, **kwargs):
+        Exception.__init__(self, *args, **kwargs)
+        self.custom_message = "Arf, c'est pas si grave"
+
+
 def get_user_description():
 
-    response = requests.get('https://randomuser.me/api/')
-    my_response = response.json()
+        try:
+            response = requests.get('https://randomuser.me/api/')
 
-    first_resp = my_response.get('results')[0]
+            my_response = response.json()
 
-    gender = first_resp.get('gender')
-    title = first_resp.get('name').get('title')
-    firstname = first_resp.get('name').get('first')
-    lastname = first_resp.get('name').get('last')
-    email = first_resp.get('email')
-    username = first_resp.get('login').get('username')
+            first_resp = my_response.get('results')[0]
 
-    return User(gender, title, firstname, lastname, email, username)
+            gender = first_resp.get('gender')
+            title = first_resp.get('name').get('title')
+            firstname = first_resp.get('name').get('first')
+            lastname = first_resp.get('name').get('last')
+            email = first_resp.get('email')
+            username = first_resp.get('login').get('username')
+
+            return User(gender, title, firstname, lastname, email, username)
+
+        except requests.exceptions.ConnectionError as connect_error:
+            print(str(connect_error))
+            raise APIUnreachableException("Aie Caramba")
+
+        finally:
+            print("No matter what, I must print this! ")
+
+def main():
+    try:
+        user = get_user_description()
+        cpprint(user)
+
+    except APIUnreachableException as e:
+        print("le serveur est injoignable", str(e), e.custom_message)
 
 
-cpprint(get_user_description())
-
-
+if __name__ == '__main__':
+    main()
 
 
 

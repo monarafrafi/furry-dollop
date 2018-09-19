@@ -3,3 +3,4 @@ Jinja2 == 2.10
 # WeasyPrint >= 0.42.*
 requests
 prettyprinter
+responses

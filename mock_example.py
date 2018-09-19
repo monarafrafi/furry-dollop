@@ -31,6 +31,7 @@ class APIUnreachableException(Exception):
         Exception.__init__(self, *args, **kwargs)
         self.custom_message = "Arf, c'est pas si grave"
 
+
 class HttpNotFound(Exception):
     pass
 
@@ -49,9 +50,6 @@ def get_user():
         except requests.exceptions.ConnectionError as connect_error:
             print(str(connect_error))
             raise APIUnreachableException("Aie Caramba")
-
-        finally:
-            print("No matter what, I must print this! ")
 
 
 def main():

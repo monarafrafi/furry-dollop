@@ -34,13 +34,16 @@ class GetUserTestCase(unittest.TestCase):
         self.assertEqual(user.email, 'mona.rafrafi@example.com')
         self.assertEqual(user.username, 'greenladybug656')
 
-    @unittest.skip('in progress')
+
+    @responses.activate
     def test_get_user_not_found(self):
+        responses.add(responses.GET, 'https://randomuser.me/api', status=404)
         with self.assertRaises(HttpNotFound):
             user = get_user()
 
-    @unittest.skip('not implemented')
+    @responses.activate
     def test_get_user_server_is_unreachable(self):
+        # By default, with responses, we have a connexion error by default
         with self.assertRaises(APIUnreachableException):
             user = get_user()
 

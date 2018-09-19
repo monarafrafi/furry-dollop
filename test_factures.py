@@ -5,8 +5,8 @@ import itertools
 import factory
 from faker.providers import BaseProvider
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
-from weasyprint import HTML, CSS
-from weasyprint.fonts import FontConfiguration
+# from weasyprint import HTML, CSS
+# from weasyprint.fonts import FontConfiguration
 import pathlib
 
 list_of_products_names = ['Horse', 'Dog', 'Chicken', 'Octopus', 'Whale']
@@ -121,10 +121,12 @@ def generate_invoice_html(invoice):
     print(render)
     return render
 
-def generate_invoice_pdf(content,filename):
-    font_config = FontConfiguration()
-    html = HTML(string=content)
-    html.write_pdf(filename, font_config=font_config)
+
+# def generate_invoice_pdf(content,filename):
+#     font_config = FontConfiguration()
+#     html = HTML(string=content)
+#     html.write_pdf(filename, font_config=font_config)
+
 
 class InvoiceHtmltestCase(unittest.TestCase):
 
@@ -136,7 +138,7 @@ class InvoiceHtmltestCase(unittest.TestCase):
 if __name__ == "__main__":
     invoice = InvoiceFactory()
     content = generate_invoice_html(invoice)
-    generate_invoice_pdf(content, '/tmp/invoice.pdf')
+    # generate_invoice_pdf(content, '/tmp/invoice.pdf')
 
 
 

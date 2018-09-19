@@ -1,13 +1,14 @@
 import unittest
 import random
-from factures import Product, InvoiceLine, Invoice
 import itertools
+import pathlib
 import factory
 from faker.providers import BaseProvider
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
-# from weasyprint import HTML, CSS
-# from weasyprint.fonts import FontConfiguration
-import pathlib
+from factures import Product, InvoiceLine, Invoice
+
+from weasyprint import HTML
+from weasyprint.fonts import FontConfiguration
 
 list_of_products_names = ['Horse', 'Dog', 'Chicken', 'Octopus', 'Whale']
 
@@ -122,23 +123,16 @@ def generate_invoice_html(invoice):
     return render
 
 
-# def generate_invoice_pdf(content,filename):
-#     font_config = FontConfiguration()
-#     html = HTML(string=content)
-#     html.write_pdf(filename, font_config=font_config)
-
-
-class InvoiceHtmltestCase(unittest.TestCase):
-
-    def generate_invoice_html(self):
-        invoice = InvoiceFactory
-        content = generate_invoice_html(invoice)
+def generate_invoice_pdf(content,filename):
+    font_config = FontConfiguration()
+    html = HTML(string=content)
+    html.write_pdf(filename, font_config=font_config)
 
 
 if __name__ == "__main__":
     invoice = InvoiceFactory()
     content = generate_invoice_html(invoice)
-    # generate_invoice_pdf(content, '/tmp/invoice.pdf')
+    generate_invoice_pdf(content, '/tmp/invoice.pdf')
 
 
 

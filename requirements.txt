@@ -3,3 +3,5 @@ jinja2 == 2.10
 requests
 prettyprinter
 responses
+pytest
+pytest-mock

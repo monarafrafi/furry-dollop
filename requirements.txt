@@ -1,6 +1,6 @@
 factory-boy >= 2.11.*
-Jinja2 == 2.10
-# WeasyPrint >= 0.42.*
+jinja2 == 2.10
+weasyprint
 requests
 prettyprinter
 responses

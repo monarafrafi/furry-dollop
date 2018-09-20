@@ -7,7 +7,7 @@ def my_func():
 
 
 # slow 0.5
-def function():
+def my_function():
     lst = []
     for i in range(1000000):
         lst.append(i)
@@ -34,7 +34,7 @@ def function_convert_to_list():
 
 
 if __name__ == '__main__':
-    function()
+    my_function()
     function_with_shortcut()
     function_list_comprehension()
     function_convert_to_list()

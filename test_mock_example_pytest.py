@@ -2,7 +2,7 @@ import pytest
 
 import responses
 # Attention, si on importe la fonction
-import mock_example# import get_user, HttpNotFound, User, APIUnreachableException
+import mock_example
 
 MOCK_USER = {
     'results': [
@@ -56,6 +56,3 @@ class TestGetUser:
         mocker.patch('mock_example.get_user', return_value=mock_example.User.create_from_api(MOCK_USER))
         user = mock_example.get_user()
         assert user.firstname == 'mona'
-
-
-

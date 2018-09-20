@@ -5,3 +5,6 @@ prettyprinter
 responses
 pytest
 pytest-mock
+pytest-cov
+pytest-flake8
+pytest-profiling

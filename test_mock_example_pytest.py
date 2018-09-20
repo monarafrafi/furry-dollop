@@ -57,3 +57,5 @@ class TestGetUser:
         user = mock_example.get_user()
         assert user.firstname == 'mona'
 
+
+

@@ -15,6 +15,7 @@ def debug(active = True):
         return wrapper
     return nested
 
+
 def timerdecorator(my_function):
     def wrapper(*kargs, **kwargs):
         t1 = time.time()
@@ -24,7 +25,9 @@ def timerdecorator(my_function):
         return result
     return wrapper
 
+
 @timerdecorator
+@debug(active=True)
 def get_user():
     response = requests.get('https://randomuser.me/api')
     return response.json()
@@ -35,8 +38,6 @@ def get_user():
 # nested retourne wrapper
 # on fait donc une egalite de reference de fonction entre get_user et wrapper
 # get_user = debug(active=True)(get_user)
-
-
 
 
 print(get_user())
